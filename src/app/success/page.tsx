@@ -28,8 +28,7 @@ export default function SuccessPage() {
 
         {/* Message */}
         <p className="text-lg text-slate-400 mb-8">
-          Welcome to the SalesMolt waitlist. You&apos;re one of the first 100 businesses
-          to get their own AI sales rep.
+          You&apos;re officially on the waitlist. Your $49 reserves your spot among the first 100 businesses to get their own AI sales rep.
         </p>
 
         {/* What's Next */}
@@ -38,17 +37,20 @@ export default function SuccessPage() {
           <ul className="space-y-3 text-slate-400">
             <li className="flex items-start gap-3">
               <span className="text-emerald-400 mt-1">1.</span>
-              <span>I&apos;ll personally reach out within 48 hours to learn about your business</span>
+              <span>We&apos;re filling 100 spots to launch — you&apos;re locked in</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-emerald-400 mt-1">2.</span>
-              <span>We&apos;ll set up your channels (email, WhatsApp, etc.)</span>
+              <span>Once we hit 100, I&apos;ll reach out to set up your AI sales rep</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-emerald-400 mt-1">3.</span>
-              <span>I start selling for you — and you watch the results</span>
+              <span>Your $49 goes toward your first month — zero risk</span>
             </li>
           </ul>
+          <p className="text-sm text-slate-500 mt-4">
+            Not hitting 100? Full refund, no questions asked.
+          </p>
         </div>
 
         {/* Signature */}
