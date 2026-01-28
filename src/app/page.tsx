@@ -1,10 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface WaitlistData {
+  count: number;
+  tier: string;
+  displayText: string;
+  percentage: number;
+  isFull: boolean;
+}
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [waitlist, setWaitlist] = useState<WaitlistData>({
+    count: 0,
+    tier: "early",
+    displayText: "Limited to 100 spots",
+    percentage: 0,
+    isFull: false,
+  });
+
+  useEffect(() => {
+    fetch("/api/waitlist/count")
+      .then(res => res.json())
+      .then(data => setWaitlist(data))
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,9 +75,30 @@ export default function Home() {
         <div className="text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span className="text-sm text-emerald-400">Limited to 100 spots</span>
+            <span className={`w-2 h-2 rounded-full animate-pulse ${
+              waitlist.tier === "closing" ? "bg-orange-500" : 
+              waitlist.tier === "full" ? "bg-red-500" : "bg-emerald-500"
+            }`} />
+            <span className={`text-sm ${
+              waitlist.tier === "closing" ? "text-orange-400" : 
+              waitlist.tier === "full" ? "text-red-400" : "text-emerald-400"
+            }`}>
+              {waitlist.displayText}
+            </span>
           </div>
+          
+          {/* Progress bar - only show when count > 10 */}
+          {waitlist.count >= 10 && (
+            <div className="max-w-xs mx-auto mb-8">
+              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500"
+                  style={{ width: `${waitlist.percentage}%` }}
+                />
+              </div>
+              <p className="text-xs text-slate-500 mt-2">{waitlist.count}/100 — Launch at 100</p>
+            </div>
+          )}
 
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
