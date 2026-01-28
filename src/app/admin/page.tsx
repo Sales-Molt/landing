@@ -122,97 +122,124 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col lg:flex-row">
       {/* Main Content */}
-      <div className={`flex-1 p-8 transition-all ${selectedEmail ? "mr-96" : ""}`}>
+      <div className={`flex-1 p-4 md:p-8 transition-all ${selectedEmail ? "lg:mr-96" : ""}`}>
         <div className="max-w-6xl mx-auto">
-          <header className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">📊 SalesMolt Dashboard</h1>
-            <div className="flex items-center gap-4">
+          <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold">📊 SalesMolt Dashboard</h1>
+            <div className="flex items-center gap-2 md:gap-4">
               <button
                 onClick={fetchData}
                 disabled={loading}
-                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm"
+                className="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-xs md:text-sm"
               >
                 {loading ? "⏳" : "🔄"} Refresh
               </button>
-              <span className="text-gray-400 text-sm">
+              <span className="text-gray-400 text-xs md:text-sm hidden sm:inline">
                 {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleString() : "Loading..."}
               </span>
             </div>
           </header>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Total</p>
-              <p className="text-3xl font-bold text-white">{data?.stats.total || 0}</p>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 mb-6 md:mb-8">
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Total</p>
+              <p className="text-xl md:text-3xl font-bold text-white">{data?.stats.total || 0}</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Sent</p>
-              <p className="text-3xl font-bold text-yellow-400">{data?.stats.sent || 0}</p>
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Sent</p>
+              <p className="text-xl md:text-3xl font-bold text-yellow-400">{data?.stats.sent || 0}</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Delivered</p>
-              <p className="text-3xl font-bold text-green-400">{data?.stats.delivered || 0}</p>
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Delivered</p>
+              <p className="text-xl md:text-3xl font-bold text-green-400">{data?.stats.delivered || 0}</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Bounced</p>
-              <p className="text-3xl font-bold text-red-400">{data?.stats.bounced || 0}</p>
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Bounced</p>
+              <p className="text-xl md:text-3xl font-bold text-red-400">{data?.stats.bounced || 0}</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Opened</p>
-              <p className="text-3xl font-bold text-blue-400">{data?.stats.opened || 0}</p>
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Opened</p>
+              <p className="text-xl md:text-3xl font-bold text-blue-400">{data?.stats.opened || 0}</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-400 text-sm">Replied</p>
-              <p className="text-3xl font-bold text-emerald-400">{data?.stats.replied || 0}</p>
+            <div className="bg-gray-800 p-3 md:p-4 rounded-lg">
+              <p className="text-gray-400 text-xs md:text-sm">Replied</p>
+              <p className="text-xl md:text-3xl font-bold text-emerald-400">{data?.stats.replied || 0}</p>
             </div>
           </div>
 
-          {/* Email Table */}
+          {/* Email Table - Mobile Cards / Desktop Table */}
           <div className="bg-gray-800 rounded-lg overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-700">
-                <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">#</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Recipient</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Company</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Subject</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Status</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Sent</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.emails.map((email, i) => (
-                  <tr 
-                    key={email.id} 
-                    className={`border-t border-gray-700 cursor-pointer transition ${
-                      selectedEmail?.id === email.id 
-                        ? "bg-gray-700" 
-                        : "hover:bg-gray-750"
-                    }`}
-                    onClick={() => setSelectedEmail(email)}
-                  >
-                    <td className="px-4 py-3 text-sm text-gray-400">{i + 1}</td>
-                    <td className="px-4 py-3">
-                      <p className="text-sm font-medium">{email.name || "Team"}</p>
-                      <p className="text-xs text-gray-400">{email.to}</p>
-                    </td>
-                    <td className="px-4 py-3 text-sm">{email.company}</td>
-                    <td className="px-4 py-3 text-sm text-gray-300 max-w-xs truncate">
-                      {email.subject}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(email.status)}`}>
-                        {email.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">{email.sentAt}</td>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-700">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">#</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">Recipient</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">Company</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">Subject</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">Status</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold">Sent</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data?.emails.map((email, i) => (
+                    <tr 
+                      key={email.id} 
+                      className={`border-t border-gray-700 cursor-pointer transition ${
+                        selectedEmail?.id === email.id 
+                          ? "bg-gray-700" 
+                          : "hover:bg-gray-750"
+                      }`}
+                      onClick={() => setSelectedEmail(email)}
+                    >
+                      <td className="px-4 py-3 text-sm text-gray-400">{i + 1}</td>
+                      <td className="px-4 py-3">
+                        <p className="text-sm font-medium">{email.name || "Team"}</p>
+                        <p className="text-xs text-gray-400">{email.to}</p>
+                      </td>
+                      <td className="px-4 py-3 text-sm">{email.company}</td>
+                      <td className="px-4 py-3 text-sm text-gray-300 max-w-xs truncate">
+                        {email.subject}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(email.status)}`}>
+                          {email.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-400">{email.sentAt}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Mobile Cards */}
+            <div className="md:hidden divide-y divide-gray-700">
+              {data?.emails.map((email, i) => (
+                <div 
+                  key={email.id}
+                  className={`p-4 cursor-pointer transition ${
+                    selectedEmail?.id === email.id ? "bg-gray-700" : "active:bg-gray-750"
+                  }`}
+                  onClick={() => setSelectedEmail(email)}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <p className="font-medium text-sm">{email.name || "Team"}</p>
+                      <p className="text-xs text-gray-400">{email.company}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(email.status)}`}>
+                      {email.status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-300 truncate">{email.subject}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <footer className="mt-8 text-center text-gray-500 text-sm">
@@ -223,8 +250,8 @@ export default function AdminDashboard() {
 
       {/* Right Panel - Email Content */}
       {selectedEmail && (
-        <div className="fixed right-0 top-0 h-full w-96 bg-gray-800 shadow-xl border-l border-gray-700 overflow-y-auto">
-          <div className="p-6">
+        <div className="fixed inset-0 lg:inset-auto lg:right-0 lg:top-0 lg:h-full lg:w-96 bg-gray-800 shadow-xl lg:border-l border-gray-700 overflow-y-auto z-50">
+          <div className="p-4 md:p-6">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-lg font-bold">Email Details</h2>
               <button 
