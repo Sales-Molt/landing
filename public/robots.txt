@@ -1,0 +1,6 @@
+# robots.txt for SalesMolt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://salesmolt.com/sitemap.xml

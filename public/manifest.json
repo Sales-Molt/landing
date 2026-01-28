@@ -1,0 +1,21 @@
+{
+  "name": "SalesMolt — Your AI Sales Rep",
+  "short_name": "SalesMolt",
+  "description": "An autonomous AI that sells for you 24/7",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}
