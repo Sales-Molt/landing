@@ -23,16 +23,19 @@ export async function POST(request: NextRequest) {
     const { email_id, from, to, subject } = payload.data || {};
     const toAddresses = Array.isArray(to) ? to.join(", ") : to;
 
-    // Fetch the email content from Resend API
+    // Fetch the email content from Resend Receiving API
     let emailContent = "(unable to fetch content)";
     if (email_id && RESEND_API_KEY) {
       try {
-        const contentResponse = await fetch(`https://api.resend.com/emails/${email_id}`, {
+        // Use the receiving endpoint for inbound emails
+        const contentResponse = await fetch(`https://api.resend.com/emails/receiving/${email_id}`, {
           headers: { Authorization: `Bearer ${RESEND_API_KEY}` },
         });
         if (contentResponse.ok) {
           const emailData = await contentResponse.json();
           emailContent = emailData.text || emailData.html?.replace(/<[^>]*>/g, '') || "(no content)";
+        } else {
+          console.error("Failed to fetch email content:", contentResponse.status, await contentResponse.text());
         }
       } catch (e) {
         console.error("Failed to fetch email content:", e);
