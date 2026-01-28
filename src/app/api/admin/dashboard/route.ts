@@ -5,9 +5,23 @@ const SESSION_COOKIE = "salesmolt_admin_session";
 const SESSION_SECRET = "eric-salesmolt-admin-2026";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-// Email data from our campaign
+// Email data from our campaign with rationale
 const emailsData = [
-  { id: 1, to: "eshaan@ourguide.ai", name: "Eshaan Gulati", company: "Ourguide", subject: "Saw Ourguide on HN - quick question about sales", resendId: "b1eeff02-2427-4314-b55b-2b358aa75dcd", sentAt: "2026-01-28 08:57", content: `Hi Eshaan,
+  { 
+    id: 1, 
+    to: "eshaan@ourguide.ai", 
+    name: "Eshaan Gulati", 
+    company: "Ourguide", 
+    subject: "Saw Ourguide on HN - quick question about sales", 
+    resendId: "b1eeff02-2427-4314-b55b-2b358aa75dcd", 
+    sentAt: "2026-01-28 08:57",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46769422",
+    emailSource: "Profile HN bio - email public",
+    personRationale: "Founder building AI task guidance tool. Early stage, likely doing sales himself. Perfect for AI sales automation.",
+    companyRationale: "Ourguide is B2B SaaS targeting enterprises for training. Needs outbound to reach L&D teams, HR departments.",
+    emailRationale: "Personalized hook about their 'click guidance' concept. Meta angle: AI selling to AI builder. Direct CTA.",
+    content: `Hi Eshaan,
 
 Saw Ourguide on Hacker News - the "shows you where to click" concept is genius. I can see how frustrating it must be watching users struggle with tutorials.
 
@@ -26,8 +40,23 @@ Best,
 Eric
 AI Sales Agent @ SalesMolt
 
-P.S. Yes, I wrote this email. And I'll read your reply too.` },
-  { id: 2, to: "tony@cosmicjs.com", name: "Tony Spiro", company: "Cosmic", subject: "AI Workflows at Cosmic - quick thought", resendId: "58678907-1770-4aec-aa9a-131fe05b33c6", sentAt: "2026-01-28 08:57", content: `Hi Tony,
+P.S. Yes, I wrote this email. And I'll read your reply too.` 
+  },
+  { 
+    id: 2, 
+    to: "tony@cosmicjs.com", 
+    name: "Tony Spiro", 
+    company: "Cosmic", 
+    subject: "AI Workflows at Cosmic - quick thought", 
+    resendId: "58678907-1770-4aec-aa9a-131fe05b33c6", 
+    sentAt: "2026-01-28 08:57",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46784297",
+    emailSource: "Pattern: prénom@domaine depuis page About cosmicjs.com",
+    personRationale: "CEO d'une boîte CMS établie. Vient de lancer AI Workflows. Comprend l'AI, budget marketing existant.",
+    companyRationale: "Cosmic est un CMS B2B SaaS. Marché compétitif (vs Contentful, Sanity). Besoin de différenciation et outbound.",
+    emailRationale: "Hook sur leur nouveau produit AI Workflows. Angle: AI selling AI. Montre qu'on comprend leur vision.",
+    content: `Hi Tony,
 
 Congrats on the AI Workflows launch at Cosmic - chaining AI agents to automate multi-step projects is exactly where the industry is heading.
 
@@ -44,8 +73,23 @@ Given what you're building with AI Workflows, thought you might appreciate seein
 
 Best,
 Eric
-AI Sales Agent @ SalesMolt` },
-  { id: 3, to: "shreyans@supermemory.ai", name: "Shreyans Jain", company: "ModifyWithAI", subject: "ModifyWithAI + AI sales = perfect match?", resendId: "1c452a66-beab-427c-a2e0-94476db86dbd", sentAt: "2026-01-28 08:58", content: `Hi Shreyans,
+AI Sales Agent @ SalesMolt` 
+  },
+  { 
+    id: 3, 
+    to: "shreyans@supermemory.ai", 
+    name: "Shreyans Jain", 
+    company: "ModifyWithAI", 
+    subject: "ModifyWithAI + AI sales = perfect match?", 
+    resendId: "1c452a66-beab-427c-a2e0-94476db86dbd", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46791039",
+    emailSource: "Profile HN → shreyans.sh → supermemory (founding engineer)",
+    personRationale: "Serial builder, multiple projects. Comprend l'AI agents. ModifyWithAI = agents qui agissent, pas juste répondent.",
+    companyRationale: "ModifyWithAI est exactement notre marché: AI agents pour apps. Peut comprendre et apprécier notre approche.",
+    emailRationale: "Angle miroir: 'je fais la même chose pour sales'. Connexion product-to-product.",
+    content: `Hi Shreyans,
 
 Love what you're building with ModifyWithAI - giving users an AI assistant that takes action, not just answers questions. That's the right approach.
 
@@ -59,8 +103,23 @@ Thought you'd appreciate the parallel given what you're building.
 
 Best,
 Eric
-AI Sales Agent` },
-  { id: 4, to: "hello@heroshot.sh", name: "Team", company: "Heroshot", subject: "Heroshot - automate sales like you automate screenshots?", resendId: "491326ec-183a-437e-95a1-2f5a95601545", sentAt: "2026-01-28 08:58", content: `Hey team,
+AI Sales Agent` 
+  },
+  { 
+    id: 4, 
+    to: "hello@heroshot.sh", 
+    name: "Team", 
+    company: "Heroshot", 
+    subject: "Heroshot - automate sales like you automate screenshots?", 
+    resendId: "491326ec-183a-437e-95a1-2f5a95601545", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN (New)",
+    sourceUrl: "https://news.ycombinator.com/item?id=46792461",
+    emailSource: "Pattern: hello@domaine (pas d'email public)",
+    personRationale: "Nouveau sur HN, early stage. Automatise les screenshots docs - comprend l'automation.",
+    companyRationale: "Dev tool pour documentation. B2B SaaS, cible les équipes tech. Petit mais prometteur.",
+    emailRationale: "Angle automation-to-automation. Question directe sur sales.",
+    content: `Hey team,
 
 Heroshot looks slick - automating documentation screenshots with a visual picker is such an underrated pain point.
 
@@ -73,8 +132,23 @@ If you're interested in automating sales the way you've automated screenshots:
 
 Cheers,
 Eric
-AI Sales Agent @ SalesMolt` },
-  { id: 5, to: "hello@pixelarcade.studio", name: "Team", company: "Pixel Arcade", subject: "Pixel Arcade - thought about sales yet?", resendId: "ccc287b6-d025-4c0c-a418-149291db6703", sentAt: "2026-01-28 08:58", content: `Hi there,
+AI Sales Agent @ SalesMolt` 
+  },
+  { 
+    id: 5, 
+    to: "hello@pixelarcade.studio", 
+    name: "Team", 
+    company: "Pixel Arcade", 
+    subject: "Pixel Arcade - thought about sales yet?", 
+    resendId: "ccc287b6-d025-4c0c-a418-149291db6703", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46791738",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "Builder créatif. Kids + AI gaming = angle education intéressant.",
+    companyRationale: "Potentiel B2B: écoles, plateformes éducatives, parents. Marché EdTech.",
+    emailRationale: "Projection vers leur futur B2B growth. Plant la graine.",
+    content: `Hi there,
 
 Pixel Arcade Studio looks fun - kids making playable browser games with AI is a great concept.
 
@@ -87,8 +161,23 @@ Currently proving myself by selling myself. $49 to join the waitlist: salesmolt.
 Might be useful as you think about B2B growth.
 
 Best,
-Eric` },
-  { id: 6, to: "hello@getpushpilot.com", name: "Team", company: "PushPilot", subject: "PushPilot - quick question", resendId: "22c87f54-efdf-410f-b16c-abeb7674392e", sentAt: "2026-01-28 08:58", content: `Hey,
+Eric` 
+  },
+  { 
+    id: 6, 
+    to: "hello@getpushpilot.com", 
+    name: "Team", 
+    company: "PushPilot", 
+    subject: "PushPilot - quick question", 
+    resendId: "22c87f54-efdf-410f-b16c-abeb7674392e", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46791218",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "Dev tool maker. Browser clicks → GitHub PRs = comprend l'automation.",
+    companyRationale: "Dev tool B2B. Cible les équipes frontend/design. Besoin d'outbound pour agences, startups.",
+    emailRationale: "Question directe et courte. Pas de fluff.",
+    content: `Hey,
 
 Saw PushPilot on HN - turning browser clicks into GitHub PRs for CSS fixes is clever. Devs will love that.
 
@@ -101,8 +190,23 @@ Proving myself by selling myself right now. $49 waitlist: salesmolt.com
 Thought you might find it interesting.
 
 Eric
-AI Sales Agent @ SalesMolt` },
-  { id: 7, to: "hello@kabo.ink", name: "Team", company: "Kaboink", subject: "Kaboink - humanizing AI content + AI sales?", resendId: "0b058c34-49d4-4d02-9f28-167c517e8a4b", sentAt: "2026-01-28 08:58", content: `Hi,
+AI Sales Agent @ SalesMolt` 
+  },
+  { 
+    id: 7, 
+    to: "hello@kabo.ink", 
+    name: "Team", 
+    company: "Kaboink", 
+    subject: "Kaboink - humanizing AI content + AI sales?", 
+    resendId: "0b058c34-49d4-4d02-9f28-167c517e8a4b", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN (New)",
+    sourceUrl: "https://news.ycombinator.com/item?id=46792478",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "Très nouveau post (39 min). Humanizing AI content = comprend le problème de l'AI générique.",
+    companyRationale: "Content tool. Peut évoluer vers B2B (équipes marketing, agences).",
+    emailRationale: "Court et direct. Connexion AI-to-AI.",
+    content: `Hi,
 
 Saw Kaboink on HN - humanizing AI content while staying on brand is a real need right now.
 
@@ -113,8 +217,23 @@ I'm Eric, an AI sales agent. I find prospects, write personalized emails, follow
 Proving myself by selling myself. $49 to join the waitlist: salesmolt.com
 
 Best,
-Eric` },
-  { id: 8, to: "hello@modelfy.art", name: "Team", company: "Modelfy", subject: "Modelfy - 3D models from images + outbound sales", resendId: "519c87e4-6e15-4ed0-9ad4-068ec310d73c", sentAt: "2026-01-28 08:58", content: `Hey,
+Eric` 
+  },
+  { 
+    id: 8, 
+    to: "hello@modelfy.art", 
+    name: "Team", 
+    company: "Modelfy", 
+    subject: "Modelfy - 3D models from images + outbound sales", 
+    resendId: "519c87e4-6e15-4ed0-9ad4-068ec310d73c", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN (New)",
+    sourceUrl: "https://news.ycombinator.com/item?id=46792317",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "3D AI tool. Marché créatif/gaming en croissance.",
+    companyRationale: "Peut cibler game studios, architectes, designers. B2B opportunities.",
+    emailRationale: "Vision futur: scale B2B.",
+    content: `Hey,
 
 Modelfy looks impressive - single image to 3D model is exactly what creators need.
 
@@ -127,8 +246,23 @@ $49 to join the waitlist: salesmolt.com
 Might be useful as you scale.
 
 Eric
-AI Sales Agent @ SalesMolt` },
-  { id: 9, to: "hello@appsidekit.com", name: "Team", company: "AppSideKit", subject: "AppSideKit - privacy-first analytics + question", resendId: "6ad64f47-0c90-448a-9133-75fe0dc19c39", sentAt: "2026-01-28 08:58", content: `Hi,
+AI Sales Agent @ SalesMolt` 
+  },
+  { 
+    id: 9, 
+    to: "hello@appsidekit.com", 
+    name: "Team", 
+    company: "AppSideKit", 
+    subject: "AppSideKit - privacy-first analytics + question", 
+    resendId: "6ad64f47-0c90-448a-9133-75fe0dc19c39", 
+    sentAt: "2026-01-28 08:58",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46789484",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "Privacy-first = différenciation claire. Bon timing avec régulations.",
+    companyRationale: "Mobile analytics B2B. Cible dev teams iOS/React Native. Marché compétitif mais niche privacy.",
+    emailRationale: "Question sur leur go-to-market.",
+    content: `Hi,
 
 Privacy-first app analytics for Swift and React Native - that's a smart positioning as privacy regulations tighten.
 
@@ -139,8 +273,23 @@ I'm Eric, an AI sales agent. Not a chatbot - an AI that finds prospects, writes 
 Proving myself by selling myself. $49 waitlist: salesmolt.com
 
 Best,
-Eric` },
-  { id: 10, to: "hello@videocompress.ai", name: "Team", company: "VideoCompress", subject: "VideoCompress - quick thought on growth", resendId: "5648ff42-7826-461a-9044-852c767d69a9", sentAt: "2026-01-28 08:59", content: `Hey,
+Eric` 
+  },
+  { 
+    id: 10, 
+    to: "hello@videocompress.ai", 
+    name: "Team", 
+    company: "VideoCompress", 
+    subject: "VideoCompress - quick thought on growth", 
+    resendId: "5648ff42-7826-461a-9044-852c767d69a9", 
+    sentAt: "2026-01-28 08:59",
+    source: "Hacker News Show HN",
+    sourceUrl: "https://news.ycombinator.com/item?id=46790125",
+    emailSource: "Pattern: hello@domaine",
+    personRationale: "Free tool = acquisition play. Besoin de monétisation.",
+    companyRationale: "Video tool. Peut pivoter B2B (agences, entreprises avec beaucoup de contenu vidéo).",
+    emailRationale: "Question directe sur monetization + B2B angle.",
+    content: `Hey,
 
 Free video compression tool is a great way to build an audience. What's the monetization plan?
 
@@ -151,8 +300,9 @@ I'm Eric, an AI sales agent. I handle outbound sales end-to-end - prospects, ema
 $49 to join the waitlist: salesmolt.com
 
 Cheers,
-Eric` },
-  { id: 11, to: "hello@lapse.blog", name: "Team", company: "Lapse.blog", subject: "Lapse.blog - creative concept + growth question", resendId: "c809508a-5f74-48f6-b796-e09b3e1f28d5", sentAt: "2026-01-28 08:59", content: `Hey,
+Eric` 
+  },
+  { id: 11, to: "hello@lapse.blog", name: "Team", company: "Lapse.blog", subject: "Lapse.blog - creative concept + growth question", resendId: "c809508a-5f74-48f6-b796-e09b3e1f28d5", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46792021", emailSource: "Pattern: hello@domaine", personRationale: "Creative concept. Accountability angle.", companyRationale: "Peut pivoter B2B: corporate blogs, team accountability tools.", emailRationale: "Curiosité + projection B2B.", content: `Hey,
 
 A blog that deletes itself if you stop writing - that's a clever accountability hack.
 
@@ -163,7 +313,7 @@ I'm Eric, an AI sales agent. Prospects, emails, follow-ups, meetings - all autom
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 12, to: "hello@picturekit.app", name: "Team", company: "PictureKit", subject: "PictureKit - image processing + sales question", resendId: "6e4bb0a9-3891-4b17-9d16-0ed3acc9f65b", sentAt: "2026-01-28 08:59", content: `Hi,
+  { id: 12, to: "hello@picturekit.app", name: "Team", company: "PictureKit", subject: "PictureKit - image processing + sales question", resendId: "6e4bb0a9-3891-4b17-9d16-0ed3acc9f65b", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46791344", emailSource: "Pattern: hello@domaine", personRationale: "Image tool, Automator-inspired = comprend l'UX.", companyRationale: "Peut cibler agences, design teams.", emailRationale: "Question sur scale.", content: `Hi,
 
 Browser-only image processing inspired by Automator - clean concept for devs and designers.
 
@@ -175,7 +325,7 @@ $49 to join the waitlist: salesmolt.com
 
 Best,
 Eric` },
-  { id: 13, to: "hello@grokimages.net", name: "Team", company: "Grok Images", subject: "Grok Images - scaling with AI sales", resendId: "55d9423c-a8b5-402c-9cf4-455781347c55", sentAt: "2026-01-28 08:59", content: `Hey,
+  { id: 13, to: "hello@grokimages.net", name: "Team", company: "Grok Images", subject: "Grok Images - scaling with AI sales", resendId: "55d9423c-a8b5-402c-9cf4-455781347c55", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46792240", emailSource: "Pattern: hello@domaine", personRationale: "Grok wrapper = comprend l'AI, early mover.", companyRationale: "AI image/video. Peut évoluer B2B.", emailRationale: "Court, direct.", content: `Hey,
 
 Grok images and 10s video generator - nice wrapper for the Grok API.
 
@@ -186,7 +336,7 @@ I'm Eric, an AI sales agent. Prospects, personalized emails, follow-ups, meeting
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 14, to: "hello@growbotics.ai", name: "Tomas", company: "Growbotics", subject: "Growbotics - robotics + sales at scale", resendId: "fb9df6da-a882-4b14-821a-a315e47b0513", sentAt: "2026-01-28 08:59", content: `Hi Tomas,
+  { id: 14, to: "hello@growbotics.ai", name: "Tomas", company: "Growbotics", subject: "Growbotics - robotics + sales at scale", resendId: "fb9df6da-a882-4b14-821a-a315e47b0513", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46786021", emailSource: "Pattern: hello@domaine, nom depuis HN profile", personRationale: "Robotics passion project. Community builder.", companyRationale: "Open-source robotics directory. B2B: research labs, universities, companies.", emailRationale: "Personnalisé avec nom, vision community → B2B.", content: `Hi Tomas,
 
 The open-source robotics directory with 3D URDF viewer is impressive. Making robotics accessible is important work.
 
@@ -198,7 +348,7 @@ $49 to join the waitlist: salesmolt.com
 
 Best,
 Eric` },
-  { id: 15, to: "hello@tambo.co", name: "Alec", company: "Tambo", subject: "Tambo + AI sales", resendId: "23e753f1-27ab-4d82-a401-8f617f72d365", sentAt: "2026-01-28 08:59", content: `Hey Alec,
+  { id: 15, to: "hello@tambo.co", name: "Alec", company: "Tambo", subject: "Tambo + AI sales", resendId: "23e753f1-27ab-4d82-a401-8f617f72d365", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46786618", emailSource: "HN username: alecf", personRationale: "Fun project, creative. LLM + gaming.", companyRationale: "Peut pivoter B2B: corporate training, gamified learning.", emailRationale: "Casual, projection B2B.", content: `Hey Alec,
 
 Wrapping the Zorks with an LLM is a fun concept - text adventures + AI is an interesting space.
 
@@ -209,7 +359,7 @@ I'm Eric, an AI sales agent. If you ever need outbound sales at scale, I can hel
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 16, to: "hello@traceml.ai", name: "Team", company: "TraceML", subject: "TraceML - distributed training observability + growth", resendId: "c51bd58f-62a7-4277-a0f5-43e19ef814e1", sentAt: "2026-01-28 08:59", content: `Hey,
+  { id: 16, to: "hello@traceml.ai", name: "Team", company: "TraceML", subject: "TraceML - distributed training observability + growth", resendId: "c51bd58f-62a7-4277-a0f5-43e19ef814e1", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46785898", emailSource: "Pattern: hello@domaine", personRationale: "ML infra = technical, understand scale.", companyRationale: "PyTorch observability. B2B: ML teams at companies.", emailRationale: "Direct question sur go-to-market.", content: `Hey,
 
 Distributed training observability for PyTorch is a real need as AI scales. Good positioning.
 
@@ -221,7 +371,7 @@ $49 to join the waitlist: salesmolt.com
 
 Best,
 Eric` },
-  { id: 17, to: "hello@tetrisbench.com", name: "Team", company: "TetrisBench", subject: "TetrisBench - benchmarking LLMs + sales question", resendId: "53763a3e-3e5d-4f56-8046-2c67aa2f3464", sentAt: "2026-01-28 08:59", content: `Hey,
+  { id: 17, to: "hello@tetrisbench.com", name: "Team", company: "TetrisBench", subject: "TetrisBench - benchmarking LLMs + sales question", resendId: "53763a3e-3e5d-4f56-8046-2c67aa2f3464", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46769752", emailSource: "Pattern: hello@domaine", personRationale: "Clever benchmark, viral potential.", companyRationale: "Peut monétiser: enterprise benchmarking, API.", emailRationale: "Question monetization.", content: `Hey,
 
 TetrisBench is a clever benchmark - Gemini Flash reaching 66% win rate against Opus on Tetris is fascinating data.
 
@@ -232,7 +382,7 @@ If you need outbound sales, I'm Eric, an AI sales agent. Prospects, emails, foll
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 18, to: "hello@convoxa.app", name: "Team", company: "Convoxa", subject: "Convoxa - voice notes app + growth", resendId: "b06bb5a3-57ab-42f3-8e10-30d371dff98e", sentAt: "2026-01-28 08:59", content: `Hey,
+  { id: 18, to: "hello@convoxa.app", name: "Team", company: "Convoxa", subject: "Convoxa - voice notes app + growth", resendId: "b06bb5a3-57ab-42f3-8e10-30d371dff98e", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46785749", emailSource: "Pattern: hello@domaine", personRationale: "4.8MB constraint = focus on quality.", companyRationale: "Voice notes → meeting minutes. B2B: teams, enterprise.", emailRationale: "Projection B2B.", content: `Hey,
 
 A 4.8MB native iOS voice notes app is impressive constraint. Clean and fast.
 
@@ -243,7 +393,7 @@ I'm Eric, an AI sales agent. I can help with B2B outbound - prospects, emails, f
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 19, to: "hello@netfence.dev", name: "Dan", company: "Netfence", subject: "Netfence - eBPF + enterprise sales", resendId: "01948cc0-13b2-409e-9d3c-883f5bb7bbbe", sentAt: "2026-01-28 08:59", content: `Hey Dan,
+  { id: 19, to: "hello@netfence.dev", name: "Dan", company: "Netfence", subject: "Netfence - eBPF + enterprise sales", resendId: "01948cc0-13b2-409e-9d3c-883f5bb7bbbe", sentAt: "2026-01-28 08:59", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46754724", emailSource: "HN username: dangoodmanUT", personRationale: "eBPF expert. Infrastructure focus.", companyRationale: "Envoy for eBPF = enterprise infrastructure. DevOps, cloud providers.", emailRationale: "Direct enterprise angle.", content: `Hey Dan,
 
 Netfence looks powerful - Envoy for eBPF filters is exactly what infrastructure teams need.
 
@@ -255,7 +405,7 @@ $49 to join the waitlist: salesmolt.com
 
 Best,
 Eric` },
-  { id: 20, to: "hello@asyncreview.dev", name: "Team", company: "AsyncReview", subject: "AsyncReview - file system as REPL + sales", resendId: "ef6bd3ea-9a23-4492-8b4f-6479b7c439c0", sentAt: "2026-01-28 09:00", content: `Hey,
+  { id: 20, to: "hello@asyncreview.dev", name: "Team", company: "AsyncReview", subject: "AsyncReview - file system as REPL + sales", resendId: "ef6bd3ea-9a23-4492-8b4f-6479b7c439c0", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46791784", emailSource: "Pattern: hello@domaine", personRationale: "Innovative concept. Dev tools.", companyRationale: "Async code review for teams.", emailRationale: "B2B projection.", content: `Hey,
 
 AsyncReview is an interesting concept - file system as REPL for async workflows.
 
@@ -266,7 +416,7 @@ I'm Eric, an AI sales agent. I can help with outbound - prospects, emails, follo
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 21, to: "hello@nyxi.dev", name: "Team", company: "Nyxi", subject: "Nyxi - execution governance + growth", resendId: "17e143d2-7207-4e15-9ec9-37caa438e363", sentAt: "2026-01-28 09:00", content: `Hey,
+  { id: 21, to: "hello@nyxi.dev", name: "Team", company: "Nyxi", subject: "Nyxi - execution governance + growth", resendId: "17e143d2-7207-4e15-9ec9-37caa438e363", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46790861", emailSource: "Pattern: hello@domaine", personRationale: "Safety/governance for AI. Hot topic.", companyRationale: "AI teams, finance, healthcare = regulated industries.", emailRationale: "Enterprise verticals.", content: `Hey,
 
 Execution-time governance for irreversible operations is a great safety layer as AI agents do more.
 
@@ -277,7 +427,7 @@ I'm Eric, an AI sales agent. Outbound sales automated - prospects, emails, meeti
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 22, to: "hello@linkedinmate.io", name: "Volkan", company: "LinkedIn Mate", subject: "LinkedIn Mate - job opportunities + sales synergy", resendId: "52d808bc-cb35-45a6-814a-0b06e64234e3", sentAt: "2026-01-28 09:00", content: `Hey Volkan,
+  { id: 22, to: "hello@linkedinmate.io", name: "Volkan", company: "LinkedIn Mate", subject: "LinkedIn Mate - job opportunities + sales synergy", resendId: "52d808bc-cb35-45a6-814a-0b06e64234e3", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46791694", emailSource: "HN username: volkanvardar", personRationale: "LinkedIn tool = understands sales/recruiting.", companyRationale: "Can sell to recruiters, HR teams, staffing agencies.", emailRationale: "Synergy angle.", content: `Hey Volkan,
 
 LinkedIn Mate is clever - finding hidden job opportunities in the feed is a real pain point.
 
@@ -288,7 +438,7 @@ I'm Eric, an AI sales agent. I can help with outbound to those verticals.
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 23, to: "hello@minimalms.dev", name: "Team", company: "Minima LMS", subject: "Minima LMS - learning management + enterprise sales", resendId: "ba743dab-9615-4618-a0ec-198216319320", sentAt: "2026-01-28 09:00", content: `Hey,
+  { id: 23, to: "hello@minimalms.dev", name: "Team", company: "Minima LMS", subject: "Minima LMS - learning management + enterprise sales", resendId: "ba743dab-9615-4618-a0ec-198216319320", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46790856", emailSource: "Pattern: hello@domaine", personRationale: "LMS = enterprise focus.", companyRationale: "L&D departments, corporate training.", emailRationale: "Direct enterprise angle.", content: `Hey,
 
 Minima LMS with bitmap view tracking and caption search - that's useful for training teams.
 
@@ -299,7 +449,7 @@ I'm Eric, an AI sales agent. Outbound at scale - prospects, emails, follow-ups.
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 24, to: "hello@xray.dev", name: "Team", company: "Xray", subject: "Xray - screenshot tool + dev teams", resendId: "720e643c-12c6-4425-a566-24d1b717a58c", sentAt: "2026-01-28 09:00", content: `Hey,
+  { id: 24, to: "hello@xray.dev", name: "Team", company: "Xray", subject: "Xray - screenshot tool + dev teams", resendId: "720e643c-12c6-4425-a566-24d1b717a58c", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46790895", emailSource: "Pattern: hello@domaine", personRationale: "Rust/Tauri = quality focus.", companyRationale: "Dev tool for teams.", emailRationale: "Team/enterprise projection.", content: `Hey,
 
 Xray - minimal screenshot tool for developers in Rust/Tauri is clean.
 
@@ -310,7 +460,7 @@ I'm Eric, an AI sales agent. I can help with B2B outbound.
 $49 waitlist: salesmolt.com
 
 Eric` },
-  { id: 25, to: "hello@local-agent.dev", name: "Daniel", company: "Local Agent", subject: "Local Agent - Nova + AI sales", resendId: "b7f61543-d3cc-4cb0-beb2-f9accafdb3c8", sentAt: "2026-01-28 09:00", content: `Hey Daniel,
+  { id: 25, to: "hello@local-agent.dev", name: "Daniel", company: "Local Agent", subject: "Local Agent - Nova + AI sales", resendId: "b7f61543-d3cc-4cb0-beb2-f9accafdb3c8", sentAt: "2026-01-28 09:00", source: "Hacker News Show HN", sourceUrl: "https://news.ycombinator.com/item?id=46791204", emailSource: "HN username: danieljhkim", personRationale: "Local AI = privacy focus. Evolving memory = advanced.", companyRationale: "Can pivot to enterprise AI assistants.", emailRationale: "B2B projection.", content: `Hey Daniel,
 
 Local AI agent with evolving memory is interesting - keeping context locally is important for privacy.
 

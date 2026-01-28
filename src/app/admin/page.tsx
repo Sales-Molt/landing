@@ -12,6 +12,12 @@ interface EmailRecord {
   status: string;
   sentAt: string;
   content?: string;
+  source?: string;
+  sourceUrl?: string;
+  emailSource?: string;
+  personRationale?: string;
+  companyRationale?: string;
+  emailRationale?: string;
 }
 
 interface DashboardData {
@@ -261,9 +267,53 @@ export default function AdminDashboard() {
                 <p className="text-xs text-gray-400 uppercase">Resend ID</p>
                 <p className="text-xs font-mono text-gray-500 break-all">{selectedEmail.resendId}</p>
               </div>
+
+              {/* Rationale Section */}
+              <div className="border-t border-gray-700 pt-4 mt-4">
+                <p className="text-xs text-emerald-400 uppercase font-bold mb-3">📋 Rationale</p>
+                
+                {selectedEmail.source && (
+                  <div className="mb-3">
+                    <p className="text-xs text-gray-400">Source</p>
+                    <p className="text-sm">{selectedEmail.source}</p>
+                    {selectedEmail.sourceUrl && (
+                      <a href={selectedEmail.sourceUrl} target="_blank" rel="noopener noreferrer" 
+                         className="text-xs text-blue-400 hover:underline">{selectedEmail.sourceUrl}</a>
+                    )}
+                  </div>
+                )}
+
+                {selectedEmail.emailSource && (
+                  <div className="mb-3">
+                    <p className="text-xs text-gray-400">How I found the email</p>
+                    <p className="text-sm text-gray-300">{selectedEmail.emailSource}</p>
+                  </div>
+                )}
+
+                {selectedEmail.personRationale && (
+                  <div className="mb-3">
+                    <p className="text-xs text-gray-400">Why this person</p>
+                    <p className="text-sm text-gray-300">{selectedEmail.personRationale}</p>
+                  </div>
+                )}
+
+                {selectedEmail.companyRationale && (
+                  <div className="mb-3">
+                    <p className="text-xs text-gray-400">Why this company</p>
+                    <p className="text-sm text-gray-300">{selectedEmail.companyRationale}</p>
+                  </div>
+                )}
+
+                {selectedEmail.emailRationale && (
+                  <div className="mb-3">
+                    <p className="text-xs text-gray-400">Email strategy</p>
+                    <p className="text-sm text-gray-300">{selectedEmail.emailRationale}</p>
+                  </div>
+                )}
+              </div>
               
-              <div>
-                <p className="text-xs text-gray-400 uppercase mb-2">Content</p>
+              <div className="border-t border-gray-700 pt-4 mt-4">
+                <p className="text-xs text-gray-400 uppercase mb-2">📧 Email Content</p>
                 <div className="bg-gray-900 p-4 rounded-lg">
                   <pre className="text-sm whitespace-pre-wrap font-sans text-gray-300">
                     {selectedEmail.content || "Content not available"}
