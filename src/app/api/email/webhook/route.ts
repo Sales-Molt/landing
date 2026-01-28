@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Resend Email Webhook Handler
-// Receives incoming emails and forwards to Telegram
+// Receives incoming emails and forwards to Clawdbot
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const CLAWDBOT_HOOK_URL = "https://clawdhost-linux-1769577237387.tailac8686.ts.net/hooks/agent";
+const CLAWDBOT_HOOK_TOKEN = process.env.CLAWDBOT_HOOK_TOKEN || "salesmolt-webhook-2026";
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,10 +24,9 @@ export async function POST(request: NextRequest) {
     const toAddresses = Array.isArray(to) ? to.join(", ") : to;
 
     // Fetch the email content from Resend Receiving API
-    let emailContent = "(unable to fetch content)";
+    let emailContent = "(no content)";
     if (email_id && RESEND_API_KEY) {
       try {
-        // Use the receiving endpoint for inbound emails
         const contentResponse = await fetch(`https://api.resend.com/emails/receiving/${email_id}`, {
           headers: { Authorization: `Bearer ${RESEND_API_KEY}` },
         });
@@ -35,30 +34,42 @@ export async function POST(request: NextRequest) {
           const emailData = await contentResponse.json();
           emailContent = emailData.text || emailData.html?.replace(/<[^>]*>/g, '') || "(no content)";
         } else {
-          console.error("Failed to fetch email content:", contentResponse.status, await contentResponse.text());
+          console.error("Failed to fetch email content:", contentResponse.status);
         }
       } catch (e) {
         console.error("Failed to fetch email content:", e);
       }
     }
 
-    // Truncate content for Telegram
-    const preview = emailContent.substring(0, 500);
-    const truncated = emailContent.length > 500;
+    // Forward to Clawdbot webhook
+    const message = `📧 **Email reçu**
 
-    // Forward to Telegram if configured
-    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-      const telegramMessage = `📧 *Email reçu*\n\n*De:* ${from || "unknown"}\n*À:* ${toAddresses || "unknown"}\n*Sujet:* ${subject || "(no subject)"}\n\n${preview}${truncated ? "..." : ""}`;
-      
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+**De:** ${from || "unknown"}
+**À:** ${toAddresses || "unknown"}  
+**Sujet:** ${subject || "(no subject)"}
+
+${emailContent.substring(0, 2000)}${emailContent.length > 2000 ? "..." : ""}`;
+
+    try {
+      const clawdbotResponse = await fetch(CLAWDBOT_HOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${CLAWDBOT_HOOK_TOKEN}`,
+        },
         body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: telegramMessage,
-          parse_mode: "Markdown",
+          message,
+          name: "Email",
+          sessionKey: `hook:email:${email_id}`,
+          wakeMode: "now",
+          deliver: true,
+          channel: "telegram",
         }),
       });
+      
+      console.log("Clawdbot response:", clawdbotResponse.status);
+    } catch (e) {
+      console.error("Failed to forward to Clawdbot:", e);
     }
 
     return NextResponse.json({ received: true });
