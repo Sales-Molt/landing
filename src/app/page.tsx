@@ -112,7 +112,7 @@ export default function Home() {
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12">
             SalesMolt is an autonomous AI that sells for you 24/7.
-            <br className="hidden md:block" />
+            <br className="hidden md:block" />{" "}
             No scripts. No templates. Just results.
           </p>
 
