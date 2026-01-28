@@ -10,11 +10,24 @@ export default function Home() {
     e.preventDefault();
     setStatus("loading");
     
-    // TODO: Integrate with Stripe checkout for $49 waitlist
-    // For now, just simulate success
-    setTimeout(() => {
-      setStatus("success");
-    }, 1000);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || "Failed to create checkout");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      setStatus("error");
+    }
   };
 
   return (
