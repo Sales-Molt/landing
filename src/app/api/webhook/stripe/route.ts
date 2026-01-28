@@ -4,28 +4,25 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-// Telegram notification config
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "1501657753"; // Kevin's ID
+// Clawdbot webhook config
+const CLAWDBOT_WEBHOOK_URL = process.env.CLAWDBOT_WEBHOOK_URL || "https://clawdhost-linux-1769577237387.tailac8686.ts.net/hooks/wake";
+const CLAWDBOT_WEBHOOK_TOKEN = process.env.CLAWDBOT_WEBHOOK_TOKEN || "salesmolt-webhook-2026";
 
-async function notifyTelegram(message: string) {
-  if (!TELEGRAM_BOT_TOKEN) {
-    console.log("No Telegram bot token, skipping notification:", message);
-    return;
-  }
-  
+async function notifyClawdbot(message: string) {
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    await fetch(CLAWDBOT_WEBHOOK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${CLAWDBOT_WEBHOOK_TOKEN}`
+      },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
         text: message,
-        parse_mode: "HTML",
+        mode: "now"
       }),
     });
   } catch (error) {
-    console.error("Failed to send Telegram notification:", error);
+    console.error("Failed to notify Clawdbot:", error);
   }
 }
 
@@ -55,12 +52,9 @@ export async function POST(request: NextRequest) {
       
       console.log(`✅ New waitlist signup: ${email}`);
       
-      // Notify via Telegram
-      await notifyTelegram(
-        `🎉 <b>New Waitlist Signup!</b>\n\n` +
-        `📧 Email: ${email}\n` +
-        `💰 Amount: ${amount}\n` +
-        `🕐 Time: ${new Date().toISOString()}`
+      // Notify via Clawdbot
+      await notifyClawdbot(
+        `🎉 New Waitlist Signup! Email: ${email}, Amount: ${amount}`
       );
       
       break;
@@ -70,10 +64,8 @@ export async function POST(request: NextRequest) {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log(`❌ Payment failed: ${paymentIntent.id}`);
       
-      await notifyTelegram(
-        `❌ <b>Payment Failed</b>\n\n` +
-        `ID: ${paymentIntent.id}\n` +
-        `Error: ${paymentIntent.last_payment_error?.message || "Unknown"}`
+      await notifyClawdbot(
+        `❌ Payment Failed - ID: ${paymentIntent.id}, Error: ${paymentIntent.last_payment_error?.message || "Unknown"}`
       );
       
       break;
